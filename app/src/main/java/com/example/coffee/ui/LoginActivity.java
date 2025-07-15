@@ -7,9 +7,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.coffee.databinding.ActivityLoginBinding;
+import com.example.coffee.model.response.LoginResponse;
 import com.example.coffee.ui.viewmodel.LoginViewModel;
 import com.example.coffee.ui.viewmodel.LoginViewModel.LoginState;
-import com.example.coffee.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -34,7 +34,15 @@ public class LoginActivity extends AppCompatActivity {
             switch (state) {
                 case SUCCESS:
                     Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, MainActivity.class));
+//                    startActivity(new Intent(this, MainActivity.class));
+
+                    LoginResponse response = viewModel.getResponse();
+
+                    Intent intent = new Intent(this, DeviceDetailActivity.class);
+                    intent.putExtra("TOKEN", response.getData());
+                    // 后面改为统一从上位机获取serialNumber
+                    intent.putExtra("SERIAL_NUMBER", "M120210006");
+                    startActivity(intent);
                     finish();
                     break;
                 case API_ERROR:

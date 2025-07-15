@@ -24,6 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 注册 DeviceDetailActivity -->
+        <activity
+            android:name=".ui.DeviceDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Coffee" />
     </application>
 
 </manifest>

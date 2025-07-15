@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.coffee.model.request.LoginRequest;
+import com.example.coffee.model.response.DeviceDetailResponse;
 import com.example.coffee.model.response.LoginResponse;
 import com.example.coffee.network.ApiService;
 import com.example.coffee.network.RetrofitClient;
@@ -16,7 +17,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends ViewModel
+{
+    private LoginResponse response;
+
     private final ApiService apiService;
 
     // 使用LiveData暴露三种状态
@@ -27,6 +31,11 @@ public class LoginViewModel extends ViewModel {
         SUCCESS,
         API_ERROR,
         NETWORK_ERROR
+    }
+
+    public LoginResponse getResponse()
+    {
+        return this.response;
     }
 
     public LoginViewModel() {
@@ -53,9 +62,8 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    LoginResponse loginResponse = response.body();
-
-                    if ("SUCCESS".equals(loginResponse.getCode())) {
+                      LoginViewModel.this.response = response.body();
+                    if ("SUCCESS".equals(LoginViewModel.this.response.getCode())) {
                         loginState.postValue(LoginState.SUCCESS);
                     } else {
                         // 业务错误（如密码错误）
