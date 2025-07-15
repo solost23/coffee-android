@@ -14,22 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee">
+
+        <!-- 启动页 LoginActivity -->
         <activity
             android:name=".ui.LoginActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Coffee">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- 注册 DeviceDetailActivity -->
+        <!-- 设备详情页 -->
         <activity
             android:name=".ui.DeviceDetailActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Coffee" />
+            android:exported="false" />
     </application>
 
 </manifest>

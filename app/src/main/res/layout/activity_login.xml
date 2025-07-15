@@ -1,39 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp">
+
+    <!-- 顶部留白 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- App名称/Logo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="欢迎登录"
+        android:textColor="#333"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="40dp"/>
 
     <!-- 账号输入框 -->
-    <EditText
-        android:id="@+id/etAccount"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入账号"
-        android:inputType="text"/>
+        android:layout_marginBottom="16dp"
+        app:boxStrokeColor="#DDD"
+        app:hintTextColor="#999"
+        android:hint="请输入账号">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColor="#333"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- 密码输入框 -->
-    <EditText
-        android:id="@+id/etPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入密码"
-        android:inputType="textPassword"/>
+        android:layout_marginBottom="8dp"
+        app:boxStrokeColor="#DDD"
+        app:hintTextColor="#999"
+        app:endIconMode="password_toggle"
+        android:hint="请输入密码">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="#333"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    &lt;!&ndash; 忘记密码 &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/tvForgotPassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:text="忘记密码？"-->
+<!--        android:textColor="#6200EE"-->
+<!--        android:textSize="14sp"-->
+<!--        android:layout_marginBottom="24dp"/>-->
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:backgroundTint="#6200EE"
+        android:text="登录"
+        android:textColor="#FFF"
+        app:cornerRadius="24dp"/>
+
+    <!-- 加载进度条 -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
 
-    <!-- 登录按钮 -->
-    <Button
-        android:id="@+id/btnLogin"
+    <!-- 底部留白 -->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="登录"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>
