@@ -1,5 +1,7 @@
 package com.example.coffee.ui;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -29,12 +31,14 @@ public class DeviceDetailActivity extends AppCompatActivity
         setContentView(binding.getRoot());
 
         // 获取传入参数
-        token = getIntent().getStringExtra("TOKEN");
-        serialNumber = getIntent().getStringExtra("SERIAL_NUMBER");
+        SharedPreferences sp = getSharedPreferences("app_prefs", MODE_PRIVATE);
 
+        token = sp.getString("TOKEN", null);
+        serialNumber = sp.getString("SERIAL_NUMBER", null);
         if (token == null || serialNumber == null)
         {
             Toast.makeText(this, "参数错误", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
             return ;
         }

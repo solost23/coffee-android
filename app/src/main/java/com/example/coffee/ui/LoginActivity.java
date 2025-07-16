@@ -1,11 +1,14 @@
 package com.example.coffee.ui;
 
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Toast;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.coffee.databinding.ActivityDeviceDetailBinding;
 import com.example.coffee.databinding.ActivityLoginBinding;
 import com.example.coffee.model.response.LoginResponse;
 import com.example.coffee.ui.viewmodel.LoginViewModel;
@@ -44,11 +47,18 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(this, MainActivity.class));
 
-                    Intent intent = new Intent(this, DeviceDetailActivity.class);
-                    intent.putExtra("TOKEN", response.getData());
-                    // 后面改为统一从上位机获取serialNumber
-                    intent.putExtra("SERIAL_NUMBER", "M120210006");
-                    startActivity(intent);
+//                    Intent intent = new Intent(this, DeviceDetailActivity.class);
+//                    intent.putExtra("TOKEN", response.getData());
+//                    // 后面改为统一从上位机获取serialNumber
+//                    intent.putExtra("SERIAL_NUMBER", "M120210006");
+
+                    // 存储到本地
+                    SharedPreferences sp = getSharedPreferences("app_prefs", MODE_PRIVATE);
+                    sp.edit()
+                            .putString("TOKEN", response.getData())
+                            .putString("SERIAL_NUMBER", "M120210006")
+                            .apply();
+                    startActivity(new Intent(this, DeviceDetailActivity.class));
                     finish();
                     break;
                 case API_ERROR:

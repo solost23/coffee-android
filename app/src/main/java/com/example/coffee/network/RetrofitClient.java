@@ -1,5 +1,7 @@
 package com.example.coffee.network;
 
+import com.example.coffee.MainApplication;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -17,7 +19,7 @@ public class RetrofitClient
         {
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new HttpLoggingInterceptor())
-                    .addInterceptor(new TokenInterceptor())
+                    .addInterceptor(new TokenInterceptor(MainApplication.getCtx()))
                     .connectTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .build();
