@@ -44,7 +44,7 @@ public class DeviceDetailActivity extends AppCompatActivity
         viewModel.getDeviceDetailState().observe(this, new Observer<DeviceDetailViewModel.DeviceDetailState>() {
             @Override
             public void onChanged(DeviceDetailViewModel.DeviceDetailState state) {
-                binding.progressBar.setVisibility(state == DeviceDetailViewModel.DeviceDetailState.LOADING ? View.VISIBLE : View.GONE);
+                binding.progress.setVisibility(state == DeviceDetailViewModel.DeviceDetailState.LOADING ? View.VISIBLE : View.GONE);
 
                 switch (state) {
                     case LOADING:
@@ -74,8 +74,8 @@ public class DeviceDetailActivity extends AppCompatActivity
     {
         binding.tvDeviceName.setText("设备名称: " + data.getName());
         binding.tvSerialNumber.setText("序列号: " + data.getSerialNumber());
-        binding.tvDeviceId.setText("设备ID: " + data.getId());
-        binding.tvOrgId.setText("所属组织ID: " + data.getOrgId());
+//        binding.tvDeviceId.setText("设备ID: " + data.getId());
+//        binding.tvOrgId.setText("所属组织ID: " + data.getOrgId());
         binding.tvOperationStatus.setText("运营状态: " + parseOperationStatus(data.getOperationStatus()));
         binding.tvStatus.setText("当前状态: " + parseStatus(data.getStatus()));
     }

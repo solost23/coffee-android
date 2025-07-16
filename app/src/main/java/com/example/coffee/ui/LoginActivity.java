@@ -21,6 +21,12 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //TODO: 默认值填入(仅开发环境使用)
+        {
+            binding.etAccount.setText("13609450394");
+            binding.etPassword.setText("htyj-coffee");
+        }
+
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         // 观察登录状态变化
