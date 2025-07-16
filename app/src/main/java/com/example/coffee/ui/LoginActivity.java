@@ -25,18 +25,18 @@ public class LoginActivity extends AppCompatActivity {
 
         // 观察登录状态变化
         viewModel.getLoginState().observe(this, state -> {
-            binding.progressBar.setVisibility(
+            binding.progress.setVisibility(
                     state == LoginState.LOADING ? View.VISIBLE : View.GONE
             );
 
             binding.btnLogin.setEnabled(state != LoginState.LOADING);
 
+            LoginResponse response = viewModel.getResponse();
+
             switch (state) {
                 case SUCCESS:
                     Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(this, MainActivity.class));
-
-                    LoginResponse response = viewModel.getResponse();
 
                     Intent intent = new Intent(this, DeviceDetailActivity.class);
                     intent.putExtra("TOKEN", response.getData());
@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                     break;
                 case API_ERROR:
-                    Toast.makeText(this, "账号或密码错误", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, "账号或密码错误", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, response.getMessage(), Toast.LENGTH_LONG).show();
                     break;
                 case NETWORK_ERROR:
                     Toast.makeText(this, "网络错误，请重试", Toast.LENGTH_LONG).show();

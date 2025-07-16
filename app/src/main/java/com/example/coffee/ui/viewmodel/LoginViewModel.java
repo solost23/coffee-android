@@ -62,7 +62,7 @@ public class LoginViewModel extends ViewModel
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                      LoginViewModel.this.response = response.body();
+                    LoginViewModel.this.response = response.body();
                     if ("SUCCESS".equals(LoginViewModel.this.response.getCode())) {
                         loginState.postValue(LoginState.SUCCESS);
                     } else {

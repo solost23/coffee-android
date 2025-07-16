@@ -1,99 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8" ?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#F2F2F7"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFF"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
-    <!-- 顶部留白 -->
-    <View
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="32dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content">
 
-    <!-- App名称/Logo -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="欢迎登录"
-        android:textColor="#333"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="40dp"/>
+        <!-- logo -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="24dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_white_bg"/>
 
-    <!-- 账号输入框 -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:boxStrokeColor="#DDD"
-        app:hintTextColor="#999"
-        android:hint="请输入账号">
+        <!-- 欢迎语 -->
+        <TextView
+            android:text="欢迎回来"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etAccount"
+        <!-- 账号 -->
+        <EditText
+            android:id="@+id/et_account"
+            android:hint="账号："
+            android:padding="12dp"
+            android:textColor="#000"
+            android:textColorHint="#999"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="#333"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp" />
 
-    <!-- 密码输入框 -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:boxStrokeColor="#DDD"
-        app:hintTextColor="#999"
-        app:endIconMode="password_toggle"
-        android:hint="请输入密码">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <!-- 密码 -->
+        <EditText
+            android:id="@+id/et_password"
+            android:hint="密码："
             android:inputType="textPassword"
-            android:textColor="#333"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:padding="12dp"
+            android:textColor="#000"
+            android:textColorHint="#999"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="24dp" />
 
-<!--    &lt;!&ndash; 忘记密码 &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:id="@+id/tvForgotPassword"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:text="忘记密码？"-->
-<!--        android:textColor="#6200EE"-->
-<!--        android:textSize="14sp"-->
-<!--        android:layout_marginBottom="24dp"/>-->
+        <!-- 登录 -->
+        <Button
+            android:id="@+id/btn_login"
+            android:text="登录"
+            android:textSize="16sp"
+            android:textColor="#FFF"
+            android:backgroundTint="#34C759"
+            android:fontFamily="sans-serif-medium"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:backgroundTint="#6200EE"
-        android:text="登录"
-        android:textColor="#FFF"
-        app:cornerRadius="24dp"/>
-
-    <!-- 加载进度条 -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"/>
-
-    <!-- 底部留白 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-</LinearLayout>
+        <!-- 加载进度条 -->
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>
