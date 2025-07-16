@@ -17,6 +17,7 @@ public class RetrofitClient
         {
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new HttpLoggingInterceptor())
+                    .addInterceptor(new TokenInterceptor())
                     .connectTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .build();
