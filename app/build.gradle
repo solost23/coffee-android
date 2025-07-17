@@ -17,9 +17,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "API_BASE_URL", '"https://coffee.htcbot.com/"'
+            buildConfigField "Boolean", "IS_DEBUG", "true"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "API_BASE_URL", '"https://prod.api.com/"'
+            buildConfigField "Boolean", "IS_DEBUG", "false"
         }
     }
     compileOptions {
@@ -28,6 +35,8 @@ android {
     }
     buildFeatures {
         viewBinding true
+        // 启用buildConfig功能
+        buildConfig true
     }
 }
 
@@ -57,4 +66,8 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
+
+    implementation "androidx.constraintlayout:constraintlayout:2.2.1"
+    // To use constraintlayout in compose
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.1"
 }
