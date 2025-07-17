@@ -18,7 +18,7 @@
 
         <!-- 启动页 LoginActivity -->
         <activity
-            android:name=".ui.DeviceDetailActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,9 +26,14 @@
             </intent-filter>
         </activity>
 
-        <!-- 设备详情页 -->
+        <!-- 登录页 -->
         <activity
             android:name=".ui.LoginActivity"
+            android:exported="false" />
+
+        <!-- 设备详情页 -->
+        <activity
+            android:name=".ui.DeviceDetailActivity"
             android:exported="false" />
     </application>
 
