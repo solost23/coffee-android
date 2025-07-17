@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.coffee.databinding.ActivityDeviceDetailBinding;
 import com.example.coffee.model.response.DeviceDetailResponse;
 import com.example.coffee.ui.viewmodel.DeviceDetailViewModel;
+import com.example.coffee.utils.Constants;
 
 public class DeviceDetailActivity extends AppCompatActivity
 {
@@ -31,10 +32,10 @@ public class DeviceDetailActivity extends AppCompatActivity
         setContentView(binding.getRoot());
 
         // 获取传入参数
-        SharedPreferences sp = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
 
-        token = sp.getString("TOKEN", null);
-        serialNumber = sp.getString("SERIAL_NUMBER", null);
+        token = sp.getString(Constants.USER_TOKEN, null);
+        serialNumber = sp.getString(Constants.SERIAL_NUMBER, null);
         if (token == null || serialNumber == null)
         {
             Toast.makeText(this, "参数错误", Toast.LENGTH_SHORT).show();

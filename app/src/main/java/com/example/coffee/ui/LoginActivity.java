@@ -13,6 +13,7 @@ import com.example.coffee.databinding.ActivityLoginBinding;
 import com.example.coffee.model.response.LoginResponse;
 import com.example.coffee.ui.viewmodel.LoginViewModel;
 import com.example.coffee.ui.viewmodel.LoginViewModel.LoginState;
+import com.example.coffee.utils.Constants;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //TODO: 默认值填入(仅开发环境使用)
+        if (Constants.IS_DEBUG)
         {
             binding.etAccount.setText("13609450394");
             binding.etPassword.setText("htyj-coffee");
@@ -53,10 +55,10 @@ public class LoginActivity extends AppCompatActivity {
 //                    intent.putExtra("SERIAL_NUMBER", "M120210006");
 
                     // 存储到本地
-                    SharedPreferences sp = getSharedPreferences("app_prefs", MODE_PRIVATE);
+                    SharedPreferences sp = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
                     sp.edit()
-                            .putString("TOKEN", response.getData())
-                            .putString("SERIAL_NUMBER", "M120210006")
+                            .putString(Constants.USER_TOKEN, response.getData())
+                            .putString(Constants.SERIAL_NUMBER, "M120210006")
                             .apply();
                     startActivity(new Intent(this, DeviceDetailActivity.class));
                     finish();

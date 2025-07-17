@@ -20,10 +20,10 @@ public interface ApiService
             "Connection: keep-alive",
             "Content-Type: application/json"
     })
-    @POST("user/login/login")
+    @POST("/gw/v1/user/login/login")
     Call<LoginResponse> login(@Body LoginRequest request);
 
-    @GET("user/device/detail")
+    @GET("/gw/v1/user/device/detail")
     Call<DeviceDetailResponse> getDeviceDetail(
         @Header("Authorization") String token,
         @Query("serialNumber") String serialNumber

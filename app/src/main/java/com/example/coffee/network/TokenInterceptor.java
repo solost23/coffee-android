@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.example.coffee.utils.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -32,14 +33,12 @@ public class TokenInterceptor implements Interceptor
     }
 
     @Override
-    public Response intercept(Chain chain) throws IOException
-    {
+    public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Response response = chain.proceed(request);
         ResponseBody body = response.body();
 
-        if (body == null)
-        {
+        if (body == null) {
             return response;
         }
 
@@ -49,10 +48,7 @@ public class TokenInterceptor implements Interceptor
             ResultDTO<?> result = new Gson().fromJson(content, ResultDTO.class);
             String code = result.getCode();
 
-            if (code.equals("1998") || code.equals("1999"))
-            {
-                clear();
-
+            if (code.equals(Constants.TOKEN_EXPIRED) || code.equals(Constants.TOKEN_INVALID)) {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     Intent intent = new Intent(this.ctx, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -67,11 +63,5 @@ public class TokenInterceptor implements Interceptor
         return response.newBuilder()
                 .body(ResponseBody.create(contentType, content))
                 .build();
-    }
-
-    private void clear()
-    {
-        SharedPreferences sp = this.ctx.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        sp.edit().remove("Authorization").apply();
     }
 }
