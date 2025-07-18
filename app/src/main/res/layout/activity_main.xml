@@ -40,6 +40,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="75dp"
             android:layout_marginBottom="30dp"
+            android:layout_marginRight="25dp"
             />
     </LinearLayout>
 
