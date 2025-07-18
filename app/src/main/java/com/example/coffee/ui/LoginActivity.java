@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.coffee.databinding.ActivityDeviceDetailBinding;
 import com.example.coffee.databinding.ActivityLoginBinding;
 import com.example.coffee.model.response.LoginResponse;
 import com.example.coffee.ui.viewmodel.LoginViewModel;
@@ -60,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                             .putString(Constants.USER_TOKEN, response.getData())
                             .putString(Constants.SERIAL_NUMBER, "M120210006")
                             .apply();
-                    startActivity(new Intent(this, DeviceDetailActivity.class));
+                    startActivity(new Intent(this, MainActivity.class));
                     finish();
                     break;
                 case API_ERROR:

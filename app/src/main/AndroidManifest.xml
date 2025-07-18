@@ -33,7 +33,7 @@
 
         <!-- 设备详情页 -->
         <activity
-            android:name=".ui.DeviceDetailActivity"
+            android:name=".ui.SettingsActivity"
             android:exported="false" />
     </application>
 

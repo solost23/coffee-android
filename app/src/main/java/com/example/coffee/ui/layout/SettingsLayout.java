@@ -1,8 +1,8 @@
-package com.example.coffee.ui;
+package com.example.coffee.ui.layout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,43 +10,46 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.coffee.databinding.ActivityDeviceDetailBinding;
+import com.example.coffee.databinding.ActivityMainBinding;
+import com.example.coffee.databinding.LayoutSettingsBinding;
 import com.example.coffee.model.response.DeviceDetailResponse;
+import com.example.coffee.ui.LoginActivity;
+import com.example.coffee.ui.MainActivity;
 import com.example.coffee.ui.viewmodel.DeviceDetailViewModel;
 import com.example.coffee.utils.Constants;
 
-public class DeviceDetailActivity extends AppCompatActivity
+public class SettingsLayout
 {
-    private ActivityDeviceDetailBinding binding;
-    private DeviceDetailViewModel viewModel;
-
-    private String token;
-    private String serialNumber;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+    public static Void onCreate(MainActivity activity)
     {
-        super.onCreate(savedInstanceState);
+        activity.getBinding().contentFrame.removeAllViews();
+        Log.v("SettingLayout", "系统设置");
 
-        binding = ActivityDeviceDetailBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        // 加载布局
+        LayoutSettingsBinding binding = LayoutSettingsBinding.inflate(activity.getLayoutInflater());
 
-        // 获取传入参数
-        SharedPreferences sp = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+        // 添加到 view
+        activity.getBinding().contentFrame.addView(binding.getRoot());
 
-        token = sp.getString(Constants.USER_TOKEN, null);
-        serialNumber = sp.getString(Constants.SERIAL_NUMBER, null);
+        // 显示进度条
+        binding.progress.setVisibility(View.VISIBLE);
+
+
+        // 接口请求数据
+        SharedPreferences sp = activity.getSharedPreferences(Constants.PREF_NAME, activity.MODE_PRIVATE);
+        String token = sp.getString(Constants.USER_TOKEN, null);
+        String serialNumber = sp.getString(Constants.SERIAL_NUMBER, null);
         if (token == null || serialNumber == null)
         {
-            Toast.makeText(this, "参数错误", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-            return ;
+            Toast.makeText(activity, "参数错误", Toast.LENGTH_SHORT).show();
+            activity.startActivity(new Intent(activity, LoginActivity.class));
+            activity.finish();
+            return null;
         }
 
-        viewModel = new ViewModelProvider(this).get(DeviceDetailViewModel.class);
+        DeviceDetailViewModel viewModel = new ViewModelProvider(activity).get(DeviceDetailViewModel.class);
 
-        viewModel.getDeviceDetailState().observe(this, new Observer<DeviceDetailViewModel.DeviceDetailState>() {
+        viewModel.getDeviceDetailState().observe(activity, new Observer<DeviceDetailViewModel.DeviceDetailState>() {
             @Override
             public void onChanged(DeviceDetailViewModel.DeviceDetailState state) {
                 binding.progress.setVisibility(state == DeviceDetailViewModel.DeviceDetailState.LOADING ? View.VISIBLE : View.GONE);
@@ -58,14 +61,14 @@ public class DeviceDetailActivity extends AppCompatActivity
                         DeviceDetailResponse response = viewModel.getResponse();
                         if (response != null && response.getData() != null)
                         {
-                            updateUI(response.getData());
+                            updateUI(binding, response.getData());
                         }
                         break;
                     case API_ERROR:
-                        Toast.makeText(DeviceDetailActivity.this, "接口返回错误", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "接口返回错误", Toast.LENGTH_LONG).show();
                         break;
                     case NETWORK_ERROR:
-                        Toast.makeText(DeviceDetailActivity.this, "网络异常，请检查链接", Toast.LENGTH_LONG).show();
+                        Toast.makeText(activity, "网络异常，请检查链接", Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -73,9 +76,11 @@ public class DeviceDetailActivity extends AppCompatActivity
 
         // 首次加载数据
         viewModel.getDeviceDetail(token, serialNumber);
+
+        return null;
     }
 
-    private void updateUI(DeviceDetailResponse.Data data)
+    private static void updateUI(LayoutSettingsBinding binding, DeviceDetailResponse.Data data)
     {
         binding.tvDeviceName.setText("设备名称: " + data.getName());
         binding.tvSerialNumber.setText("序列号: " + data.getSerialNumber());
@@ -85,7 +90,7 @@ public class DeviceDetailActivity extends AppCompatActivity
         binding.tvStatus.setText("当前状态: " + parseStatus(data.getStatus()));
     }
 
-    private String parseOperationStatus(Integer status)
+    private static String parseOperationStatus(Integer status)
     {
         if (status == null)
         {
@@ -102,10 +107,10 @@ public class DeviceDetailActivity extends AppCompatActivity
         return "未知";
     }
 
-//    设备状态（如 0-正常、1-离线、2-升级中 3-中断 4-设备清洗 5-设备消毒
+    //    设备状态（如 0-正常、1-离线、2-升级中 3-中断 4-设备清洗 5-设备消毒
 //    6-产品制作 7-等待取杯 8-警告 9-一键恢复中 10-奶缸移位中 11-奶缸待复位
 //    12-奶缸复位中 13-执行动作）
-    private String parseStatus(Integer status)
+    private static String parseStatus(Integer status)
     {
         if (status == null)
         {

@@ -1,9 +1,8 @@
 package com.example.coffee.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.util.Log;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coffee.MenuAdapter;
@@ -11,14 +10,23 @@ import com.example.coffee.MenuItemData;
 import com.example.coffee.R;
 import com.example.coffee.databinding.ActivityMainBinding;
 import com.example.coffee.databinding.MenuItemHeaderBinding;
-import com.example.coffee.databinding.MenuItemNormalBinding;
+import com.example.coffee.ui.layout.DevopsLayout;
+import com.example.coffee.ui.layout.SettingsLayout;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
 
 public class MainActivity extends AppCompatActivity
 {
     private ActivityMainBinding binding;
+
+    public ActivityMainBinding getBinding()
+    {
+        return this.binding;
+    }
 
     private List<MenuItemData> menuItems  = Arrays.asList(
             new MenuItemData("运维管理", R.drawable.ic_ops1, R.drawable.ic_ops),
@@ -48,32 +56,45 @@ public class MainActivity extends AppCompatActivity
         MenuItemHeaderBinding headerBinding = MenuItemHeaderBinding.inflate(getLayoutInflater());
         binding.leftMenu.addHeaderView(headerBinding.getRoot());
 
+        // 加载主内容
+        DevopsLayout.onCreate(this);
+
         MenuAdapter adapter = new MenuAdapter(this, menuItems);
         binding.leftMenu.setAdapter(adapter);
 
         // 菜单点击事件
         binding.leftMenu.setOnItemClickListener((parent, view, position, id) -> {
             position = position - binding.leftMenu.getHeaderViewsCount();
-            if (position >= 0 && position < menuItems.size())
-            {
-                //            MenuItemData selectedItem = menuList.get(position);
+            if (position >= 0 && position < menuItems.size()) {
                 adapter.setSelectedPosition(position); // 图标变更
                 binding.leftMenu.setBackgroundResource(backgroundResArray[position]);  // 切换背景图
-                Toast.makeText(this, "点击了：" + menuItems.get(position), Toast.LENGTH_SHORT).show();
 
-//            binding.contentFrame.removeAllViews();
-//            TextView tv = new TextView(this);
-//            tv.setText("当前页面：" + selectedItem);
-//            tv.setTextSize(22);
-//            tv.setPadding(40, 80, 40, 20);
-//            binding.contentFrame.addView(tv);
+                Function<MainActivity, Void> handle = getFunctionMap().get(menuItems.get(position).title);
+                if (handle == null) {
+                    Log.v("MainActivity", "Event " + menuItems.get(position).title + " is currently not supported.");
+                    return;
+                }
+
+                handle.apply(this);
             }
-
         });
 
         // header点击事件
         headerBinding.getRoot().setOnClickListener(v -> {
             Toast.makeText(this, "点击了 Header", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private static Map<String, Function<MainActivity, Void>> getFunctionMap()
+    {
+        Map<String, Function<MainActivity, Void>> fm = new HashMap<>();
+
+        fm.put("运维管理", DevopsLayout::onCreate);
+//        fm.put("物料管理");
+//        fm.put("制作订单");
+        fm.put("系统设置", SettingsLayout::onCreate);
+//        fm.put("主题设置");
+
+        return fm;
     }
 }
