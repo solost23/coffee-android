@@ -23,7 +23,7 @@ public class DevopsLayout
     public static Void onCreate(MainActivity activity)
     {
         activity.getBinding().contentFrame.removeAllViews();
-        Log.v("DevopsLayout", "运维设置");
+        Log.v("DevopsLayout", "运维管理");
 
         LayoutDevopsBinding binding = LayoutDevopsBinding.inflate(activity.getLayoutInflater());
 

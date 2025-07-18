@@ -11,7 +11,10 @@ import com.example.coffee.R;
 import com.example.coffee.databinding.ActivityMainBinding;
 import com.example.coffee.databinding.MenuItemHeaderBinding;
 import com.example.coffee.ui.layout.DevopsLayout;
+import com.example.coffee.ui.layout.MaterialLayout;
+import com.example.coffee.ui.layout.OrderLayout;
 import com.example.coffee.ui.layout.SettingsLayout;
+import com.example.coffee.ui.layout.ThemeLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -90,10 +93,10 @@ public class MainActivity extends AppCompatActivity
         Map<String, Function<MainActivity, Void>> fm = new HashMap<>();
 
         fm.put("运维管理", DevopsLayout::onCreate);
-//        fm.put("物料管理");
-//        fm.put("制作订单");
+        fm.put("物料管理", MaterialLayout::onCreate);
+        fm.put("制作订单", OrderLayout::onCreate);
         fm.put("系统设置", SettingsLayout::onCreate);
-//        fm.put("主题设置");
+        fm.put("主题设置", ThemeLayout::onCreate);
 
         return fm;
     }

@@ -3,31 +3,31 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:gravity="center"
-    android:background="@drawable/ic_devops_bg"> <!-- 渐变背景 -->
+    android:background="@drawable/ic_devops_bg"
+    > <!-- 渐变背景 -->
     <ProgressBar android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
 
     <!-- 信息卡片 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:padding="24dp"
-        android:background="@drawable/ic_card_bg"
         android:elevation="4dp"
-        android:layout_marginBottom="24dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        >
 
         <!-- 信息项 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <TextView
                 android:text="设备名称："
                 style="@style/InfoText" />
@@ -39,7 +39,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <TextView
                 android:text="序列号："
@@ -51,7 +52,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <TextView
                 android:text="当前状态："
@@ -63,7 +65,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <TextView
                 android:text="运营状态："
@@ -73,33 +76,43 @@
                 style="@style/InfoText"/>
         </LinearLayout>
 
-    </LinearLayout>
+        <!-- 按钮区域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="2"
+            android:layout_marginTop="30dp"
+            >
 
-    <!-- 按钮区域 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="2"
-        android:layout_marginTop="8dp">
+            <Button
+                android:id="@+id/btn_check_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_upgrade"
+                android:text="检测更新"
+                android:textColor="#000000"
+                android:backgroundTint="#FFFFFF"
+                android:alpha="0.3"
+                />
 
-        <Button
-            android:id="@+id/btn_check_update"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_upgrade"
-            android:text="检测更新" />
+            <Button
+                android:id="@+id/btn_restart_luban"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:drawableLeft="@drawable/ic_restart"
+                android:text="重启LUBAN"
+                android:textColor="#000000"
+                android:backgroundTint="#FFFFFF"
+                android:alpha="0.3"
+                />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_restart_luban"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:drawableLeft="@drawable/ic_restart"
-            android:text="重启LUBAN" />
     </LinearLayout>
 
 </LinearLayout>
