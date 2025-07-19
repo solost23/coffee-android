@@ -1,8 +1,8 @@
 package com.example.coffee.network;
 
 import com.example.coffee.model.request.LoginRequest;
-import com.example.coffee.model.response.LoginResponse;
 import com.example.coffee.model.response.DeviceDetailResponse;
+import com.example.coffee.model.response.ResultDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,10 +21,10 @@ public interface ApiService
             "Content-Type: application/json"
     })
     @POST("/gw/v1/user/login/login")
-    Call<LoginResponse> login(@Body LoginRequest request);
+    Call<ResultDTO<String>> login(@Body LoginRequest request);
 
     @GET("/gw/v1/user/device/detail")
-    Call<DeviceDetailResponse> getDeviceDetail(
+    Call<ResultDTO<DeviceDetailResponse>> getDeviceDetail(
         @Header("Authorization") String token,
         @Query("serialNumber") String serialNumber
     );

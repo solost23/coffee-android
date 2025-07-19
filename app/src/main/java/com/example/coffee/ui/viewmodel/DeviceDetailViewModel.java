@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.coffee.model.response.DeviceDetailResponse;
+import com.example.coffee.model.response.ResultDTO;
 import com.example.coffee.network.ApiService;
 import com.example.coffee.network.RetrofitClient;
 
@@ -17,7 +18,7 @@ import retrofit2.Response;
 
 public class DeviceDetailViewModel extends ViewModel
 {
-    private DeviceDetailResponse response;
+    private ResultDTO<DeviceDetailResponse> response;
 
     private final ApiService apiService;
 
@@ -30,7 +31,7 @@ public class DeviceDetailViewModel extends ViewModel
         NETWORK_ERROR
     }
 
-    public DeviceDetailResponse getResponse()
+    public ResultDTO<DeviceDetailResponse> getResponse()
     {
         return this.response;
     }
@@ -47,9 +48,9 @@ public class DeviceDetailViewModel extends ViewModel
     {
         deviceDetailState.postValue(DeviceDetailState.LOADING);
 
-        apiService.getDeviceDetail(token, serialNumber).enqueue(new Callback<DeviceDetailResponse>() {
+        apiService.getDeviceDetail(token, serialNumber).enqueue(new Callback<ResultDTO<DeviceDetailResponse>>() {
             @Override
-            public void onResponse(Call<DeviceDetailResponse> call, Response<DeviceDetailResponse> response) {
+            public void onResponse(Call<ResultDTO<DeviceDetailResponse>> call, Response<ResultDTO<DeviceDetailResponse>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     DeviceDetailViewModel.this.response = response.body();
                     if ("SUCCESS".equals(DeviceDetailViewModel.this.response.getCode())) {
@@ -63,7 +64,7 @@ public class DeviceDetailViewModel extends ViewModel
             }
 
             @Override
-            public void onFailure(Call<DeviceDetailResponse> call, Throwable t) {
+            public void onFailure(Call<ResultDTO<DeviceDetailResponse>> call, Throwable t) {
                 if (t instanceof SocketTimeoutException || t instanceof ConnectException) {
                     deviceDetailState.postValue(DeviceDetailViewModel.DeviceDetailState.NETWORK_ERROR);
                 } else {

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.coffee.databinding.ActivityLoginBinding;
-import com.example.coffee.model.response.LoginResponse;
+import com.example.coffee.model.response.ResultDTO;
 import com.example.coffee.ui.viewmodel.LoginViewModel;
 import com.example.coffee.ui.viewmodel.LoginViewModel.LoginState;
 import com.example.coffee.utils.Constants;
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
             binding.btnLogin.setEnabled(state != LoginState.LOADING);
 
-            LoginResponse response = viewModel.getResponse();
+            ResultDTO<String> response = viewModel.getResponse();
 
             switch (state) {
                 case SUCCESS:

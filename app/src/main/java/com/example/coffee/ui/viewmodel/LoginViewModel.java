@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.coffee.model.request.LoginRequest;
-import com.example.coffee.model.response.DeviceDetailResponse;
-import com.example.coffee.model.response.LoginResponse;
+import com.example.coffee.model.response.ResultDTO;
 import com.example.coffee.network.ApiService;
 import com.example.coffee.network.RetrofitClient;
 
@@ -19,7 +18,7 @@ import retrofit2.Response;
 
 public class LoginViewModel extends ViewModel
 {
-    private LoginResponse response;
+    private ResultDTO<String> response;
 
     private final ApiService apiService;
 
@@ -33,7 +32,7 @@ public class LoginViewModel extends ViewModel
         NETWORK_ERROR
     }
 
-    public LoginResponse getResponse()
+    public ResultDTO<String> getResponse()
     {
         return this.response;
     }
@@ -58,9 +57,9 @@ public class LoginViewModel extends ViewModel
                 "M120210006"
         );
 
-        apiService.login(new LoginRequest(data)).enqueue(new Callback<LoginResponse>() {
+        apiService.login(new LoginRequest(data)).enqueue(new Callback<ResultDTO<String>>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<ResultDTO<String>> call, Response<ResultDTO<String>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginViewModel.this.response = response.body();
                     if ("SUCCESS".equals(LoginViewModel.this.response.getCode())) {
@@ -76,7 +75,7 @@ public class LoginViewModel extends ViewModel
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<ResultDTO<String>> call, Throwable t) {
                 // 网络错误（如超时）
                 if (t instanceof SocketTimeoutException || t instanceof ConnectException) {
                     loginState.postValue(LoginState.NETWORK_ERROR);

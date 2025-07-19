@@ -6,13 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.coffee.databinding.ActivityMainBinding;
 import com.example.coffee.databinding.LayoutSettingsBinding;
 import com.example.coffee.model.response.DeviceDetailResponse;
+import com.example.coffee.model.response.ResultDTO;
 import com.example.coffee.ui.LoginActivity;
 import com.example.coffee.ui.MainActivity;
 import com.example.coffee.ui.viewmodel.DeviceDetailViewModel;
@@ -58,10 +57,17 @@ public class SettingsLayout
                     case LOADING:
                         break;
                     case SUCCESS:
-                        DeviceDetailResponse response = viewModel.getResponse();
+                        ResultDTO<DeviceDetailResponse> response = viewModel.getResponse();
                         if (response != null && response.getData() != null)
                         {
-                            updateUI(binding, response.getData());
+                            // updateUI(binding, response.getData());
+
+                            // UI 设置
+                            DeviceDetailResponse data = response.getData();
+                            binding.tvDeviceName.setText("设备名称: " + data.getName());
+                            binding.tvSerialNumber.setText("序列号: " + data.getSerialNumber());
+                            binding.tvOperationStatus.setText("运营状态: " + parseOperationStatus(data.getOperationStatus()));
+                            binding.tvStatus.setText("当前状态: " + parseStatus(data.getStatus()));
                         }
                         break;
                     case API_ERROR:
@@ -78,16 +84,6 @@ public class SettingsLayout
         viewModel.getDeviceDetail(token, serialNumber);
 
         return null;
-    }
-
-    private static void updateUI(LayoutSettingsBinding binding, DeviceDetailResponse.Data data)
-    {
-        binding.tvDeviceName.setText("设备名称: " + data.getName());
-        binding.tvSerialNumber.setText("序列号: " + data.getSerialNumber());
-//        binding.tvDeviceId.setText("设备ID: " + data.getId());
-//        binding.tvOrgId.setText("所属组织ID: " + data.getOrgId());
-        binding.tvOperationStatus.setText("运营状态: " + parseOperationStatus(data.getOperationStatus()));
-        binding.tvStatus.setText("当前状态: " + parseStatus(data.getStatus()));
     }
 
     private static String parseOperationStatus(Integer status)
