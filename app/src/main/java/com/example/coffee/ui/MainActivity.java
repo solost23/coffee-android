@@ -1,43 +1,34 @@
 package com.example.coffee.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
-import android.os.Bundle;
-import android.widget.Toast;
 
-import com.example.coffee.MenuAdapter;
-import com.example.coffee.MenuItemData;
+import android.os.Bundle;
+
 import com.example.coffee.R;
 import com.example.coffee.databinding.ActivityMainBinding;
-import com.example.coffee.databinding.MenuItemHeaderBinding;
 import com.example.coffee.ui.layout.DevopsLayout;
 import com.example.coffee.ui.layout.MaterialLayout;
 import com.example.coffee.ui.layout.OrderLayout;
 import com.example.coffee.ui.layout.SettingsLayout;
 import com.example.coffee.ui.layout.ThemeLayout;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
-
 public class MainActivity extends AppCompatActivity
 {
     private ActivityMainBinding binding;
+//    private MenuAdapter adapter;
 
     public ActivityMainBinding getBinding()
     {
         return this.binding;
     }
 
-    private List<MenuItemData> menuItems  = Arrays.asList(
-            new MenuItemData("运维管理", R.drawable.ic_ops1, R.drawable.ic_ops),
-            new MenuItemData("物料管理", R.drawable.ic_meterial1, R.drawable.ic_meterial),
-            new MenuItemData("制作订单", R.drawable.ic_order1, R.drawable.ic_order),
-            new MenuItemData("系统设置", R.drawable.ic_settings1, R.drawable.ic_settings),
-            new MenuItemData("主题设置", R.drawable.ic_theme1, R.drawable.ic_theme)
-    );
+//    private List<MenuItemData> menuItems  = Arrays.asList(
+//            new MenuItemData("运维管理", R.drawable.ic_ops1, R.drawable.ic_ops),
+//            new MenuItemData("物料管理", R.drawable.ic_meterial1, R.drawable.ic_meterial),
+//            new MenuItemData("制作订单", R.drawable.ic_order1, R.drawable.ic_order),
+//            new MenuItemData("系统设置", R.drawable.ic_settings1, R.drawable.ic_settings),
+//            new MenuItemData("主题设置", R.drawable.ic_theme1, R.drawable.ic_theme)
+//    );
 
     private int[] backgroundResArray = {
             R.drawable.ic_menu_bg,
@@ -55,49 +46,83 @@ public class MainActivity extends AppCompatActivity
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // 加载并绑定 HeaderView
-        MenuItemHeaderBinding headerBinding = MenuItemHeaderBinding.inflate(getLayoutInflater());
-        binding.leftMenu.addHeaderView(headerBinding.getRoot());
-
-        // 加载主内容
+        // 默认加载运维管理页面
         DevopsLayout.onCreate(this);
+        updateMenuSelection(0);
 
-        MenuAdapter adapter = new MenuAdapter(this, menuItems);
-        binding.leftMenu.setAdapter(adapter);
-
-        // 菜单点击事件
-        binding.leftMenu.setOnItemClickListener((parent, view, position, id) -> {
-            position = position - binding.leftMenu.getHeaderViewsCount();
-            if (position >= 0 && position < menuItems.size()) {
-                adapter.setSelectedPosition(position); // 图标变更
-                binding.leftMenu.setBackgroundResource(backgroundResArray[position]);  // 切换背景图
-
-                Function<MainActivity, Void> handle = getFunctionMap().get(menuItems.get(position).title);
-                if (handle == null) {
-                    Log.v("MainActivity", "Event " + menuItems.get(position).title + " is currently not supported.");
-                    return;
-                }
-
-                handle.apply(this);
-            }
+        // 菜单点击逻辑
+        binding.menuItemDevops.setOnClickListener(v -> {
+            DevopsLayout.onCreate(this);
+            updateMenuSelection(0);
         });
 
-        // header点击事件
-        headerBinding.getRoot().setOnClickListener(v -> {
-            Toast.makeText(this, "点击了 Header", Toast.LENGTH_SHORT).show();
+        binding.menuItemMaterial.setOnClickListener(v -> {
+            MaterialLayout.onCreate(this);
+            updateMenuSelection(1);
+        });
+
+        binding.menuItemOrder.setOnClickListener(v -> {
+            OrderLayout.onCreate(this);
+            updateMenuSelection(2);
+        });
+
+        binding.menuItemSettings.setOnClickListener(v -> {
+            SettingsLayout.onCreate(this);
+            updateMenuSelection(3);
+        });
+
+        binding.menuItemTheme.setOnClickListener(v -> {
+            ThemeLayout.onCreate(this);
+            updateMenuSelection(4);
         });
     }
 
-    private static Map<String, Function<MainActivity, Void>> getFunctionMap()
+    private void updateMenuSelection(int pos)
     {
-        Map<String, Function<MainActivity, Void>> fm = new HashMap<>();
+        // 设置菜单背景图
+        binding.menuFrame.setBackgroundResource(backgroundResArray[pos]);
 
-        fm.put("运维管理", DevopsLayout::onCreate);
-        fm.put("物料管理", MaterialLayout::onCreate);
-        fm.put("制作订单", OrderLayout::onCreate);
-        fm.put("系统设置", SettingsLayout::onCreate);
-        fm.put("主题设置", ThemeLayout::onCreate);
+        // 所有菜单项图标复原
+        binding.menuItemDevopsIcon.setImageResource(R.drawable.ic_ops1);
+        binding.menuItemMaterialIcon.setImageResource(R.drawable.ic_meterial1);
+        binding.menuItemOrderIcon.setImageResource(R.drawable.ic_order1);
+        binding.menuItemSettingsIcon.setImageResource(R.drawable.ic_settings1);
+        binding.menuItemThemeIcon.setImageResource(R.drawable.ic_theme1);
 
-        return fm;
+        // 设置当前选中图标
+        switch (pos)
+        {
+            case 0:
+                binding.menuItemDevopsIcon.setImageResource(R.drawable.ic_ops);
+                break;
+            case 1:
+                binding.menuItemMaterialIcon.setImageResource(R.drawable.ic_meterial);
+                break;
+            case 2:
+                binding.menuItemOrderIcon.setImageResource(R.drawable.ic_order);
+                break;
+            case 3:
+                binding.menuItemSettingsIcon.setImageResource(R.drawable.ic_settings);
+                break;
+            case 4:
+                binding.menuItemThemeIcon.setImageResource(R.drawable.ic_theme);
+                break;
+        }
+
+        // 主内容加载
+
     }
+
+//    private static Map<String, Function<MainActivity, Void>> getFunctionMap()
+//    {
+//        Map<String, Function<MainActivity, Void>> fm = new HashMap<>();
+//
+//        fm.put("运维管理", DevopsLayout::onCreate);
+//        fm.put("物料管理", MaterialLayout::onCreate);
+//        fm.put("制作订单", OrderLayout::onCreate);
+//        fm.put("系统设置", SettingsLayout::onCreate);
+//        fm.put("主题设置", ThemeLayout::onCreate);
+//
+//        return fm;
+//    }
 }
