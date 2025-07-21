@@ -15,7 +15,6 @@ import com.example.coffee.ui.layout.ThemeLayout;
 public class MainActivity extends AppCompatActivity
 {
     private ActivityMainBinding binding;
-//    private MenuAdapter adapter;
 
     public ActivityMainBinding getBinding()
     {
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     private void updateMenuSelection(int pos)
     {
         // 设置菜单背景图
-        binding.menuFrame.setBackgroundResource(backgroundResArray[pos]);
+        binding.menuBarBg.setBackgroundResource(backgroundResArray[pos]);
 
         // 所有菜单项图标复原
         binding.menuItemDevopsIcon.setImageResource(R.drawable.ic_ops1);
@@ -108,8 +107,6 @@ public class MainActivity extends AppCompatActivity
                 binding.menuItemThemeIcon.setImageResource(R.drawable.ic_theme);
                 break;
         }
-
-        // 主内容加载
 
     }
 

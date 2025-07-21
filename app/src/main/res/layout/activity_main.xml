@@ -7,32 +7,23 @@
     android:background="@drawable/ic_bg"
     >
 
-
-
-    <!-- 这里放header -->
-
-
-
     <!-- 左侧菜单容器 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/menu_frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="30dp"
-        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintWidth_percent="0.25"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         >
 
-
-
         <!-- 背景图 -->
-        <ImageView
+        <ImageView android:id="@+id/menu_bar_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_menu_bg"
             />
 
         <!-- 垂直菜单结构（Header + 菜单）-->
@@ -42,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
+            android:background="@android:color/transparent"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,22 +53,194 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:src="@drawable/ic_index"
+                    android:background="@drawable/ic_index"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/guideline_18"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
                     >
-                    <ImageView android:id="@+id/header_bg"
-                        android:layout_width="match_parent"
-                        android:src="@drawable/ic_index"
-                        />
+
+                    <!-- 文本内容 -->
+                    <LinearLayout
+                        android:id="@+id/header_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            android:id="@+id/menu_header_text"
+                            android:text="htbot coffee"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/menu_header_text1"
+                            android:text="无锡工厂(旋转门)Lite006"
+                            android:textColor="#FFFFFF"
+                            android:textSize="10sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.30"
+                    />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.42"
+                    />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.54"
+                    />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_66"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.66"
+                    />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_78"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.78"
+                    />
+
+                <!-- 运维管理 -->
+                <LinearLayout android:id="@+id/menu_item_devops"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="@id/guideline_18"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_30"
+                    >
+                    <ImageView android:id="@+id/menu_item_devops_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_ops1"
+                        android:layout_marginEnd="12dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="运维管理"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- 物料管理 -->
+                <LinearLayout android:id="@+id/menu_item_material"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="@id/guideline_30"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_42"
+                    >
+                    <ImageView android:id="@+id/menu_item_material_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_meterial1"
+                        android:layout_marginEnd="12dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="物料管理"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- 制作订单 -->
+                <LinearLayout android:id="@+id/menu_item_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="@id/guideline_42"
+                    app:layout_constraintBottom_toBottomOf="@id/guideline_54"
+                    >
+                    <ImageView android:id="@+id/menu_item_order_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_order1"
+                        android:layout_marginEnd="12dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="制作订单"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- 系统设置 -->
+                <LinearLayout android:id="@+id/menu_item_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="@id/guideline_54"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_66"
+                    >
+                    <ImageView android:id="@+id/menu_item_settings_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_settings1"
+                        android:layout_marginEnd="12dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="系统设置"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- 主题设置 -->
+                <LinearLayout android:id="@+id/menu_item_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="@id/guideline_66"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_78"
+                    >
+                    <ImageView android:id="@+id/menu_item_theme_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_theme1"
+                        android:layout_marginEnd="12dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="主题设置"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 <!--            <include-->
@@ -87,125 +251,6 @@
 <!--                android:layout_margin="12dp"-->
 <!--                />-->
 
-            <!-- 静态菜单项 -->
-<!--            <LinearLayout android:id="@+id/static_menu_items"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_weight="8"-->
-<!--                android:orientation="vertical"-->
-<!--                >-->
-
-<!--                &lt;!&ndash; 运维管理 &ndash;&gt;-->
-<!--                <LinearLayout android:id="@+id/menu_item_devops"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:paddingStart="16dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    >-->
-<!--                    <ImageView android:id="@+id/menu_item_devops_icon"-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/ic_ops1"-->
-<!--                        android:layout_marginEnd="12dp" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="运维管理"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textSize="16sp" />-->
-<!--                </LinearLayout>-->
-
-<!--                &lt;!&ndash; 物料管理 &ndash;&gt;-->
-<!--                <LinearLayout android:id="@+id/menu_item_material"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:paddingStart="16dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    >-->
-<!--                    <ImageView android:id="@+id/menu_item_material_icon"-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/ic_meterial1"-->
-<!--                        android:layout_marginEnd="12dp" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="物料管理"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textSize="16sp" />-->
-<!--                </LinearLayout>-->
-
-<!--                &lt;!&ndash; 制作订单 &ndash;&gt;-->
-<!--                <LinearLayout android:id="@+id/menu_item_order"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:paddingStart="16dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    >-->
-<!--                    <ImageView android:id="@+id/menu_item_order_icon"-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/ic_order1"-->
-<!--                        android:layout_marginEnd="12dp" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="制作订单"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textSize="16sp" />-->
-<!--                </LinearLayout>-->
-
-<!--                &lt;!&ndash; 系统设置 &ndash;&gt;-->
-<!--                <LinearLayout android:id="@+id/menu_item_settings"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:paddingStart="16dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    >-->
-<!--                    <ImageView android:id="@+id/menu_item_settings_icon"-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/ic_settings1"-->
-<!--                        android:layout_marginEnd="12dp" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="系统设置"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textSize="16sp" />-->
-<!--                </LinearLayout>-->
-
-<!--                &lt;!&ndash; 主题设置 &ndash;&gt;-->
-<!--                <LinearLayout android:id="@+id/menu_item_theme"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:paddingStart="16dp"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    >-->
-<!--                    <ImageView android:id="@+id/menu_item_theme_icon"-->
-<!--                        android:layout_width="24dp"-->
-<!--                        android:layout_height="24dp"-->
-<!--                        android:src="@drawable/ic_theme1"-->
-<!--                        android:layout_marginEnd="12dp" />-->
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="主题设置"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textSize="16sp" />-->
-<!--                </LinearLayout>-->
-
-<!--            </LinearLayout>-->
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
