@@ -1,20 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_theme_bg"
+    android:padding="24dp"
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!-- 两条水平辅助线 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.33"
+        />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="主题设置"
-            android:textSize="50dp"
-            android:gravity="center"
-            />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60"
+        />
 
-    </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_75_hor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_84"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.84"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_93"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.93"
+        />
 
+    <!-- 三条垂直辅助线 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_75_ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75"
+        />
+
+    <!-- 背景图标题 -->
+    <TextView android:id="@+id/background_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="背景图"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <!-- 背景图 -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/background1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/border_template"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="5dp"
+        app:layout_constraintTop_toBottomOf="@id/background_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_33"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_25"
+        app:shapeAppearanceOverlay="@style/RoundedImage"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/background2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintTop_toBottomOf="@id/background_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_33"
+        app:layout_constraintStart_toStartOf="@id/guideline_25"
+        app:layout_constraintEnd_toStartOf="@id/guideline_50"
+        app:shapeAppearanceOverlay="@style/RoundedImage"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/background3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintTop_toBottomOf="@id/background_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_33"
+        app:layout_constraintStart_toStartOf="@id/guideline_50"
+        app:layout_constraintEnd_toStartOf="@id/guideline_75_ver"
+        app:shapeAppearanceOverlay="@style/RoundedImage"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/background4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintTop_toBottomOf="@id/background_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_33"
+        app:layout_constraintStart_toStartOf="@id/guideline_75_ver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedImage"
+        />
+
+    <!-- 菜单风格标题 -->
+    <TextView android:id="@+id/menu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="菜单风格"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        app:layout_constraintTop_toBottomOf="@id/guideline_33"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/menu_bg1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="5dp"
+        app:layout_constraintTop_toBottomOf="@id/menu_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_60"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_25"
+        app:shapeAppearanceOverlay="@style/RoundedImage"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/menu_bg2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintTop_toBottomOf="@id/menu_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_60"
+        app:layout_constraintStart_toStartOf="@id/guideline_25"
+        app:layout_constraintEnd_toStartOf="@id/guideline_50"
+        app:shapeAppearanceOverlay="@style/RoundedImage"
+        />
+
+    <!-- 颜色设置标题 -->
+    <TextView android:id="@+id/color_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="颜色设置"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        app:layout_constraintTop_toBottomOf="@id/guideline_60"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <!-- R 标签 -->
+    <TextView android:id="@+id/seek_red_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/color_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_75_hor"
+        app:layout_constraintStart_toStartOf="parent" />
+    <SeekBar android:id="@+id/seek_red"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:max="255"
+        android:progress="30"
+        android:progressTint="#FF0000"
+        app:layout_constraintTop_toBottomOf="@id/color_title"
+        app:layout_constraintBottom_toTopOf="@id/guideline_75_hor"
+        app:layout_constraintStart_toStartOf="@id/seek_red_label"
+        app:layout_constraintEnd_toStartOf="@id/guideline_75_ver"
+        />
+
+    <!-- G 标签 -->
+    <TextView android:id="@+id/seek_green_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="G"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="@id/guideline_75_hor"
+        app:layout_constraintStart_toStartOf="parent" />
+    <SeekBar
+        android:id="@+id/seek_green"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="70"
+        android:progressTint="#00FF00"
+        app:layout_constraintTop_toTopOf="@id/guideline_75_hor"
+        app:layout_constraintBottom_toTopOf="@id/guideline_84"
+        app:layout_constraintStart_toStartOf="@id/seek_green_label"
+        app:layout_constraintEnd_toStartOf="@id/guideline_75_ver" />
+
+    <!-- B 标签 -->
+    <TextView android:id="@+id/seek_blue_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="@id/guideline_84"
+        app:layout_constraintStart_toStartOf="parent" />
+    <SeekBar
+        android:id="@+id/seek_blue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="50"
+        android:progressTint="#0000FF"
+        app:layout_constraintTop_toTopOf="@id/guideline_84"
+        app:layout_constraintBottom_toTopOf="@id/guideline_93"
+        app:layout_constraintStart_toStartOf="@id/seek_blue_label"
+        app:layout_constraintEnd_toStartOf="@id/guideline_75_ver" />
+
+    <!-- A 标签 -->
+    <TextView android:id="@+id/seek_alpha_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="@id/guideline_93"
+        app:layout_constraintStart_toStartOf="parent" />
+    <SeekBar
+        android:id="@+id/seek_alpha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:progress="128"
+        android:progressTint="#FFFFFF"
+        app:layout_constraintTop_toTopOf="@id/guideline_93"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/seek_alpha_label"
+        app:layout_constraintEnd_toStartOf="@id/guideline_75_ver" />
+
+    <!-- 恢复默认颜色按钮 -->
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="一键恢复默认配色"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#8B4513"
+        app:layout_constraintTop_toTopOf="@id/guideline_84"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

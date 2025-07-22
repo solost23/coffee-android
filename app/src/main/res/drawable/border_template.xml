@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 底层内容图 -->
+    <item
+        android:id="@+id/layer_background"
+        android:drawable="@android:color/transparent" />
+
+    <!-- 顶层边框图(确保在内容图之上) -->
+    <item
+        android:id="@+id/layer_border"
+        android:drawable="@android:color/transparent" />
+</layer-list>
