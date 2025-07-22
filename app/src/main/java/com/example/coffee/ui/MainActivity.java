@@ -2,6 +2,7 @@ package com.example.coffee.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.coffee.R;
@@ -11,6 +12,7 @@ import com.example.coffee.ui.layout.MaterialLayout;
 import com.example.coffee.ui.layout.OrderLayout;
 import com.example.coffee.ui.layout.SettingsLayout;
 import com.example.coffee.ui.layout.ThemeLayout;
+import com.example.coffee.utils.Constants;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -44,6 +46,37 @@ public class MainActivity extends AppCompatActivity
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // 读取主题
+        {
+            SharedPreferences sp = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+            String background = sp.getString(Constants.BACKGROUND, "0");
+            String menuBackground = sp.getString(Constants.MENU_BACKGROUND, "0");
+            switch (background)
+            {
+                case "0":
+                    binding.getRoot().setBackgroundResource(R.drawable.ic_theme_bg1);
+                    break;
+                case "1":
+                    binding.getRoot().setBackgroundResource(R.drawable.ic_theme_bg2);
+                    break;
+                case "2":
+                    binding.getRoot().setBackgroundResource(R.drawable.ic_theme_bg3);
+                    break;
+                case "3":
+                    binding.getRoot().setBackgroundResource(R.drawable.ic_theme_bg4);
+                    break;
+            }
+
+            switch (menuBackground)
+            {
+                case "0":
+                    break;
+                case "1":
+                    break;
+            }
+        }
+
 
         // 默认加载运维管理页面
         DevopsLayout.onCreate(this);

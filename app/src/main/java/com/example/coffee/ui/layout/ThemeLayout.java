@@ -1,6 +1,7 @@
 package com.example.coffee.ui.layout;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.example.coffee.R;
 import com.example.coffee.databinding.LayoutThemeBinding;
 import com.example.coffee.ui.MainActivity;
+import com.example.coffee.utils.Constants;
 
 public class ThemeLayout
 {
@@ -25,8 +27,9 @@ public class ThemeLayout
 
         activity.getBinding().contentFrame.addView(binding.getRoot());
 
-        init(binding);
+        init(activity, binding);
 
+        SharedPreferences sp = activity.getSharedPreferences(Constants.PREF_NAME, activity.MODE_PRIVATE);
         // 单击事件
         // 背景图
         binding.background1.setOnClickListener(v -> {
@@ -37,6 +40,10 @@ public class ThemeLayout
                     R.drawable.ic_theme_bg1,
                     R.drawable.ic_theme_bg_a
             );
+            activity.getBinding().getRoot().setBackgroundResource(R.drawable.ic_theme_bg1);
+            sp.edit()
+                    .putString(Constants.BACKGROUND, "0")
+                    .apply();
         });
         binding.background2.setOnClickListener(v -> {
             // 清除所有背景图边框
@@ -48,6 +55,12 @@ public class ThemeLayout
                     R.drawable.ic_theme_bg2,
                     R.drawable.ic_theme_bg_a
             );
+
+            // 设置整体背景
+            activity.getBinding().getRoot().setBackgroundResource(R.drawable.ic_theme_bg2);
+            sp.edit()
+                    .putString(Constants.BACKGROUND, "1")
+                    .apply();
         });
         binding.background3.setOnClickListener(v -> {
             initBackground(binding);
@@ -57,6 +70,10 @@ public class ThemeLayout
                     R.drawable.ic_theme_bg3,
                     R.drawable.ic_theme_bg_a
                     );
+            activity.getBinding().getRoot().setBackgroundResource(R.drawable.ic_theme_bg3);
+            sp.edit()
+                    .putString(Constants.BACKGROUND, "2")
+                    .apply();
         });
         binding.background4.setOnClickListener(v -> {
             initBackground(binding);
@@ -66,6 +83,10 @@ public class ThemeLayout
                     R.drawable.ic_theme_bg4,
                     R.drawable.ic_theme_bg_a
             );
+            activity.getBinding().getRoot().setBackgroundResource(R.drawable.ic_theme_bg4);
+            sp.edit()
+                    .putString(Constants.BACKGROUND, "3")
+                    .apply();
         });
 
         // 菜单风格
@@ -77,6 +98,9 @@ public class ThemeLayout
                 R.drawable.ic_theme_menu_bg1,
                 R.drawable.ic_theme_bg_m
             );
+            sp.edit()
+                    .putString(Constants.MENU_BACKGROUND, "0")
+                    .apply();
         });
         binding.menuBg2.setOnClickListener(v -> {
             initMenuBackground(binding);
@@ -86,29 +110,79 @@ public class ThemeLayout
                     R.drawable.ic_theme_menu_bg2,
                     R.drawable.ic_theme_bg_m
             );
+            sp.edit()
+                    .putString(Constants.MENU_BACKGROUND, "1")
+                    .apply();
         });
 
         return null;
     }
 
-    private static void init(LayoutThemeBinding binding)
+    private static void init(MainActivity activity, LayoutThemeBinding binding)
     {
         initBackground(binding);
-        apply(
-                binding.background1,
-                R.drawable.border_template,
-                R.drawable.ic_theme_bg1,
-                R.drawable.ic_theme_bg_a
-        );
+        // 从本地获取数据，若本地没有，使用默认的
+        SharedPreferences sp = activity.getSharedPreferences(Constants.PREF_NAME, activity.MODE_PRIVATE);
+
+        String background = sp.getString(Constants.BACKGROUND, "0");
+        String menuBackground = sp.getString(Constants.MENU_BACKGROUND, "0");
+
+        switch (background)
+        {
+            case "0":
+                apply(
+                        binding.background1,
+                        R.drawable.border_template,
+                        R.drawable.ic_theme_bg1,
+                        R.drawable.ic_theme_bg_a
+                );
+                break;
+            case "1":
+                apply(
+                        binding.background2,
+                        R.drawable.border_template,
+                        R.drawable.ic_theme_bg2,
+                        R.drawable.ic_theme_bg_a
+                );
+                break;
+            case "2":
+                apply(
+                        binding.background3,
+                        R.drawable.border_template,
+                        R.drawable.ic_theme_bg3,
+                        R.drawable.ic_theme_bg_a
+                );
+                break;
+            case "3":
+                apply(
+                        binding.background4,
+                        R.drawable.border_template,
+                        R.drawable.ic_theme_bg4,
+                        R.drawable.ic_theme_bg_a
+                );
+                break;
+        }
 
         initMenuBackground(binding);
-        apply(
-                binding.menuBg1,
-                R.drawable.border_template,
-                R.drawable.ic_theme_menu_bg1,
-                R.drawable.ic_theme_bg_m
-        );
-
+        switch (menuBackground)
+        {
+            case "0":
+                apply(
+                        binding.menuBg1,
+                        R.drawable.border_template,
+                        R.drawable.ic_theme_menu_bg1,
+                        R.drawable.ic_theme_bg_m
+                );
+                break;
+            case "1":
+                apply(
+                        binding.menuBg2,
+                        R.drawable.border_template,
+                        R.drawable.ic_theme_menu_bg2,
+                        R.drawable.ic_theme_bg_m
+                );
+                break;
+        }
     }
 
     // 设置背景图
