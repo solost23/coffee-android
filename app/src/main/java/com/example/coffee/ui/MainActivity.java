@@ -1,6 +1,7 @@
 package com.example.coffee.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -121,23 +122,35 @@ public class MainActivity extends AppCompatActivity
         binding.menuItemSettingsIcon.setImageResource(R.drawable.ic_settings1);
         binding.menuItemThemeIcon.setImageResource(R.drawable.ic_theme1);
 
-        // 设置当前选中图标
+        // 字体颜色复原
+        binding.menuItemDevopsText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.black));
+        binding.menuItemMaterialText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.black));
+        binding.menuItemOrderText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.black));
+        binding.menuItemSettingsText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.black));
+        binding.menuItemThemeText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.black));
+
+        // 设置当前选中图标及字体颜色
         switch (pos)
         {
             case 0:
                 binding.menuItemDevopsIcon.setImageResource(R.drawable.ic_ops);
+                binding.menuItemDevopsText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.coffee_brown));
                 break;
             case 1:
                 binding.menuItemMaterialIcon.setImageResource(R.drawable.ic_meterial);
+                binding.menuItemMaterialText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.coffee_brown));
                 break;
             case 2:
                 binding.menuItemOrderIcon.setImageResource(R.drawable.ic_order);
+                binding.menuItemOrderText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.coffee_brown));
                 break;
             case 3:
                 binding.menuItemSettingsIcon.setImageResource(R.drawable.ic_settings);
+                binding.menuItemSettingsText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.coffee_brown));
                 break;
             case 4:
                 binding.menuItemThemeIcon.setImageResource(R.drawable.ic_theme);
+                binding.menuItemThemeText.setTextColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.coffee_brown));
                 break;
         }
 
