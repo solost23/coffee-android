@@ -64,10 +64,10 @@ public class SettingsLayout
 
                             // UI 设置
                             DeviceDetailResponse data = response.getData();
-                            binding.tvDeviceName.setText("设备名称: " + data.getName());
-                            binding.tvSerialNumber.setText("序列号: " + data.getSerialNumber());
-                            binding.tvOperationStatus.setText("运营状态: " + parseOperationStatus(data.getOperationStatus()));
-                            binding.tvStatus.setText("当前状态: " + parseStatus(data.getStatus()));
+                            binding.tvDeviceName.setText(data.getName());
+                            binding.tvSerialNumber.setText(data.getSerialNumber());
+                            binding.tvOperationStatus.setText(parseOperationStatus(data.getOperationStatus()));
+                            binding.tvStatus.setText(parseStatus(data.getStatus()));
                         }
                         break;
                     case API_ERROR:
