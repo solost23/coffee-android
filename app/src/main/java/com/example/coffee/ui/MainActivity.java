@@ -2,17 +2,28 @@ package com.example.coffee.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.coffee.R;
 import com.example.coffee.databinding.ActivityMainBinding;
+import com.example.coffee.model.request.DeviceOperationStatusUpdateRequest;
+import com.example.coffee.model.response.DeviceDetailResponse;
+import com.example.coffee.model.response.ResultDTO;
 import com.example.coffee.ui.layout.DevopsLayout;
 import com.example.coffee.ui.layout.MaterialLayout;
 import com.example.coffee.ui.layout.OrderLayout;
 import com.example.coffee.ui.layout.SettingsLayout;
 import com.example.coffee.ui.layout.ThemeLayout;
+import com.example.coffee.ui.viewmodel.DeviceDetailViewModel;
+import com.example.coffee.ui.viewmodel.DeviceOperationStatusUpdateModel;
 import com.example.coffee.utils.Constants;
 
 public class MainActivity extends AppCompatActivity
@@ -78,36 +89,133 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+        // 左侧菜单
+        {
+            // 菜单点击逻辑
+            binding.menuItemDevops.setOnClickListener(v -> {
+                DevopsLayout.onCreate(this);
+                updateMenuSelection(0);
+            });
+
+            binding.menuItemMaterial.setOnClickListener(v -> {
+                MaterialLayout.onCreate(this);
+                updateMenuSelection(1);
+            });
+
+            binding.menuItemOrder.setOnClickListener(v -> {
+                OrderLayout.onCreate(this);
+                updateMenuSelection(2);
+            });
+
+            binding.menuItemSettings.setOnClickListener(v -> {
+                SettingsLayout.onCreate(this);
+                updateMenuSelection(3);
+            });
+
+            binding.menuItemTheme.setOnClickListener(v -> {
+                ThemeLayout.onCreate(this);
+                updateMenuSelection(4);
+            });
+        }
+
+        // 初始化运营状态
+        {
+            SharedPreferences sp = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+            String token = sp.getString(Constants.USER_TOKEN, null);
+            String serialNumber = sp.getString(Constants.SERIAL_NUMBER, null);
+            if (token == null || serialNumber == null)
+            {
+                Toast.makeText(this, "参数错误", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, LoginActivity.class));
+                finish();
+                return;
+            }
+
+            DeviceDetailViewModel viewModel = new ViewModelProvider(this).get(DeviceDetailViewModel.class);
+
+            viewModel.getDeviceDetailState().observe(this, new Observer<DeviceDetailViewModel.DeviceDetailState>() {
+                @Override
+                public void onChanged(DeviceDetailViewModel.DeviceDetailState state) {
+
+                    switch (state) {
+                        case LOADING:
+                            break;
+                        case SUCCESS:
+                            ResultDTO<DeviceDetailResponse> response = viewModel.getResponse();
+                            if (response != null && response.getData() != null)
+                            {
+                                // 设置运营状态
+                                DeviceDetailResponse data = response.getData();
+                                binding.switchBtn.setChecked(parseOperationStatus(data.getOperationStatus()));
+                            }
+                            break;
+                        case API_ERROR:
+                            Toast.makeText(MainActivity.this, "接口返回错误", Toast.LENGTH_LONG).show();
+                            break;
+                        case NETWORK_ERROR:
+                            Toast.makeText(MainActivity.this, "网络异常，请检查链接", Toast.LENGTH_LONG).show();
+                            break;
+                    }
+                }
+            });
+
+            viewModel.getDeviceDetail(token, serialNumber);
+        }
+
+        // 运营按钮点击逻辑
+        {
+            binding.switchBtn.setOnClickListener(v -> {
+                Log.v("MainActivity", "点击了运营开关");
+
+                // 调用接口
+                SharedPreferences sp = getSharedPreferences(Constants.PREF_NAME, MODE_PRIVATE);
+                String token = sp.getString(Constants.USER_TOKEN, null);
+                String serialNumber = sp.getString(Constants.SERIAL_NUMBER, null);
+                if (token == null || serialNumber == null)
+                {
+                    Toast.makeText(this, "参数错误", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
+                    return;
+                }
+
+                DeviceOperationStatusUpdateModel viewModel = new ViewModelProvider(this).get(DeviceOperationStatusUpdateModel.class);
+
+                viewModel.getDeviceOperationStatusUpdateState().observe(this, new Observer<DeviceOperationStatusUpdateModel.DeviceOperationStatusUpdateState>() {
+                    @Override
+                    public void onChanged(DeviceOperationStatusUpdateModel.DeviceOperationStatusUpdateState state) {
+                        switch (state)
+                        {
+                            case LOADING:
+                                break;
+                            case SUCCESS:
+                                // 切换开启状态
+                            case API_ERROR:
+                                ResultDTO<String> response = viewModel.getResponse();
+                                if (response != null)
+                                {
+                                    Toast.makeText(MainActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "接口返回错误", Toast.LENGTH_LONG).show();
+                                }
+                                break;
+                            case NETWORK_ERROR:
+                                Toast.makeText(MainActivity.this, "网络异常，请检查链接", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+                });
+
+                // 根据运营状态决定设置 0-关 1-开
+                DeviceOperationStatusUpdateRequest.Data data = new DeviceOperationStatusUpdateRequest.Data(12L, 1);
+                DeviceOperationStatusUpdateRequest request = new DeviceOperationStatusUpdateRequest(data);
+                viewModel.deviceOperationStatusUpdate(token, request);
+            });
+        }
 
         // 默认加载运维管理页面
         DevopsLayout.onCreate(this);
         updateMenuSelection(0);
-
-        // 菜单点击逻辑
-        binding.menuItemDevops.setOnClickListener(v -> {
-            DevopsLayout.onCreate(this);
-            updateMenuSelection(0);
-        });
-
-        binding.menuItemMaterial.setOnClickListener(v -> {
-            MaterialLayout.onCreate(this);
-            updateMenuSelection(1);
-        });
-
-        binding.menuItemOrder.setOnClickListener(v -> {
-            OrderLayout.onCreate(this);
-            updateMenuSelection(2);
-        });
-
-        binding.menuItemSettings.setOnClickListener(v -> {
-            SettingsLayout.onCreate(this);
-            updateMenuSelection(3);
-        });
-
-        binding.menuItemTheme.setOnClickListener(v -> {
-            ThemeLayout.onCreate(this);
-            updateMenuSelection(4);
-        });
     }
 
     private void updateMenuSelection(int pos)
@@ -154,6 +262,23 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
+    }
+
+    private static Boolean parseOperationStatus(Integer status)
+    {
+        if (status == null)
+        {
+            return false;
+        }
+
+        switch (status)
+        {
+            case 0:
+                return false;
+            case 1:
+                return true;
+        }
+        return false;
     }
 
 //    private static Map<String, Function<MainActivity, Void>> getFunctionMap()
