@@ -70,4 +70,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:2.2.1"
     // To use constraintlayout in compose
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.1"
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.19.1'
 }

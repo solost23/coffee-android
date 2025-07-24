@@ -281,6 +281,24 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    public void toastShort(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void toastLong(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        MaterialLayout.onDestroy();
+        binding = null;
+    }
+
 //    private static Map<String, Function<MainActivity, Void>> getFunctionMap()
 //    {
 //        Map<String, Function<MainActivity, Void>> fm = new HashMap<>();
